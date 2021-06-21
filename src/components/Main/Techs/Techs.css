@@ -1,0 +1,44 @@
+.techs__link {
+    font-size: 14px;
+    line-height: 17px;
+    font-weight: normal;
+    text-align: center;
+    letter-spacing: -0.04em;
+    background: #E8E8E8;
+    border-radius: 10px;
+    width: 90px;
+    height: 60px;
+    display: flex;
+    margin: 10px;
+
+    justify-content: center;
+}
+.techs__container {
+}
+
+.techs {
+  background: #f5f5f5;
+  padding: 100px 70px;
+}
+.techs__list {
+    margin-top: 100px;
+    display: flex;
+    padding: 0;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+}
+.techs__subtitle {
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: -0.04em;
+}
+.techs__title {
+  font-weight: normal;
+  font-size: 50px;
+  line-height: 58px;
+  text-align: center;
+  letter-spacing: -0.04em;
+}
