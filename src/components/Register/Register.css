@@ -1,0 +1,68 @@
+.register {
+  max-width: 396px;
+  display: flex;
+  flex-direction: column;
+  margin: 70px auto;
+  align-items: flex-start;
+  margin: 70px auto;
+}
+.register__button {
+  border: none;
+
+  border-radius: 2px;
+  height: 50px;
+  width: 100%;
+  margin-top: 216px;
+}
+.register__button:hover {
+  opacity: 0.5;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.register__paragraph {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  margin: 40px 0;
+}
+.register__link-span {
+  color: #3456F3;
+}
+.register__link{margin: 16px auto;}
+
+
+.register__input {
+  height: 46px;
+  width: 100%;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 16px;
+  border: none;
+  background: #f4f4f4;
+  border-radius: 8px;
+  margin: 0px 0 10px 0px;
+  padding: 0;
+}
+.register__button {
+  border: none;
+
+  border-radius: 2px;
+  height: 50px;
+  width: 100%;
+  margin-top: 216px;
+}
+.register__button:hover {
+  opacity: 0.5;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.register__form {
+  width: 100%;
+}
+.register__input-name {
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+margin: 10px 0;
+  color: #a0a0a0;
+}

@@ -1,53 +1,70 @@
-import { Link, Route, Switch } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 import logo from "../../images/logo.svg";
-import humanLogo from "../../images/imagesheader.svg";
+import { useLocation } from "react-router-dom";
 function Header() {
+  let location = useLocation();
+  console.log(location.pathname);
   return (
-    <header className="header">
-      <img className="header__logo" src={logo} alt="Логотип" />{" "}
-      <nav className="header__nav">
+    <header className={
+      location.pathname !== "/"
+        ? "header header_style_white"
+        : "header"
+    }>
+     <Link to="/" className="header__logo logo"><img  src={logo} alt="Логотип" />{" "}</Link> 
+      <nav
+        className={
+          location.pathname === "/movies"
+            ? "header__nav header__nav_space-between"
+            : "header__nav "
+        }
+      >
         {" "}
-        <Switch>
+        <Route path="/movies">
+          <ul className="header__list">
+            {" "}
+            <li>
+              <Link to="signup" className="header__link link">
+                Фильмы
+              </Link>
+            </li>
+            <li>
+              <Link to="signin" className="header__link link">
+                Сохраненные фильмы
+              </Link>
+            </li>
+          </ul>
+        </Route>
+        <ul className="header__list">
           <Route exact path="/">
-            <ul className="header__list">
-              {" "}
-              <li>
-                <Link to="signup" className="header__link link">
-                  Фильмы
-                </Link>
-              </li>
-              <li>
-                <Link to="signin" className="header__link link">
-                  Сохраненные фильмы
-                </Link>
-              </li>
-            </ul>
-            <ul className="header__list">
-              <li>
-                <Link to="signup" className="header__link link">
-                  Регистрация
-                </Link>
-              </li>
-
-              <li><div>
-                <Link to="signin" className="header__link link header__link_style-button">
+            {" "}
+            <li>
+              <Link to="signup" className="header__link link">
+                Регистрация
+              </Link>
+            </li>
+            <li>
+              <div>
+                <Link
+                  to="movies"
+                  className="header__link link header__link_style-button"
+                >
                   Войти
                 </Link>
-             </div> </li>
-              
-              <li>
-                <Link to="signin" className="header__link link">
-                  Аккаунт{" "}
-                  <img
-                    className="header__human-logo"
-                    src={humanLogo}
-                    alt="Логотип"
-                  />
-                </Link>
-              </li>
-            </ul>
+              </div>{" "}
+            </li>
           </Route>
-        </Switch>
+
+          <li>
+            <Route path="/movies">
+              <Link to="signin" className="header__link link">
+                Аккаунт{" "}
+                <div className="header__human-logo"></div>
+                  
+               
+              </Link>
+            </Route>
+          </li>
+        </ul>
       </nav>
     </header>
   );

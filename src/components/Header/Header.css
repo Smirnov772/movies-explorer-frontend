@@ -2,12 +2,28 @@
   display: flex;
   padding: 0 70px;
   height: 74px;
+  background: #dddee3;
+  align-items: center;
+}
+.header_style_white{
+  background: none;
 }
 .header__human-logo {
-  
+  margin-left: 10px;
+  width: 30px;
+  height: 30px;
+  background: #F4F4F4;
+  background-image: url(../../images/imagesheader.svg);
+  background-size: 10px;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 6px;
 }
 .header__link {
   margin-right: 16px;
+  display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
 }
 .header__link_style-button {
   display: flex;
@@ -19,10 +35,7 @@
   margin-left: 14px;
   justify-content: center;
 }
-.header__logo {width: 38px;
-  height: 38px;
-  margin: auto;
-}
+.header__logo {}
 .header__list {
   list-style: none;
   display: flex;
@@ -31,6 +44,10 @@
 .header__nav {
   display: flex;
   width: 100%;
-  justify-content: space-between;
+  justify-content: flex-end;
+ 
   align-items: center;
+}
+.header__nav_space-between{
+   justify-content: space-between;
 }
