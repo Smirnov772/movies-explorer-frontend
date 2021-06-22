@@ -72,3 +72,8 @@
   transition: 0.3s;
   cursor: pointer;
 }
+button:hover {
+  opacity: 0.5;
+  transition: 0.3s;
+  cursor: pointer;
+}

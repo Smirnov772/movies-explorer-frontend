@@ -14,6 +14,8 @@
 @import url(./components/Movies/MoviesCard/MoviesCard.css);
 @import url(./components/Movies/Preloader/Preloader.css);
 @import url(./components/Register/Register.css);
+@import url(./components/Profile/Profile.css);
+@import url(./components/NotFoundPage/NotFoundPage.css);
 @import url(./components/Footer/Footer);
 /* @import url(./blocks/profile/profile.css);
 @import url(./blocks/elements/elements.css);
@@ -28,7 +30,6 @@
 
 .page {
   max-width: 1280px;
-  position: relative;
   font-family: Inter, Arial, sans-serif;
   font-style: normal;
   font-weight: normal;

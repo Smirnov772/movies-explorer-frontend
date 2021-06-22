@@ -1,38 +1,35 @@
-.register {
+.user-auth {
   max-width: 396px;
   display: flex;
   flex-direction: column;
-  margin: 70px auto;
+  margin: calc(6%) auto;
+  padding: 0 30px;
   align-items: flex-start;
-  margin: 70px auto;
 }
-.register__button {
+.user-auth__button {
   border: none;
 
   border-radius: 2px;
   height: 50px;
   width: 100%;
-  margin-top: 216px;
+  margin-top: 90px;
 }
-.register__button:hover {
-  opacity: 0.5;
-  transition: 0.3s;
-  cursor: pointer;
-}
-.register__paragraph {
+
+.user-auth__paragraph {
   font-weight: 500;
   font-size: 24px;
   line-height: 29px;
   margin: 40px 0;
 }
-.register__link-span {
+.user-auth__link-span {
   color: #3456F3;
 }
-.register__link{margin: 16px auto;}
+.user-auth__link{margin: 16px auto;}
 
 
-.register__input {
+.user-auth__input {
   height: 46px;
+  max-width: 381px;
   width: 100%;
   font-weight: normal;
   font-size: 13px;
@@ -41,25 +38,18 @@
   background: #f4f4f4;
   border-radius: 8px;
   margin: 0px 0 10px 0px;
-  padding: 0;
+  padding: 0 0 0 15px;
 }
-.register__button {
-  border: none;
 
-  border-radius: 2px;
-  height: 50px;
-  width: 100%;
-  margin-top: 216px;
-}
-.register__button:hover {
+.user-auth__button:hover {
   opacity: 0.5;
   transition: 0.3s;
   cursor: pointer;
 }
-.register__form {
+.user-auth__form {
   width: 100%;
 }
-.register__input-name {
+.user-auth__input-name {
   font-weight: normal;
   font-size: 10px;
   line-height: 12px;
