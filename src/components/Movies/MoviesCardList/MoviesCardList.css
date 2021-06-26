@@ -16,3 +16,9 @@
     margin: 0 30px;
   }
 }
+@media screen and (max-width: 610px) {
+  .movies-card-list {
+
+    margin: 0 14px;
+  }
+}

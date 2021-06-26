@@ -101,5 +101,7 @@
   }
   .search-form {
     margin: 70px 30px 110px;
+}.search-form__items {
+  border: none;
 }
 }
