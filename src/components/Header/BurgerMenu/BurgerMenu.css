@@ -11,6 +11,7 @@
     cursor: pointer;
     background: url(../../../images/burgerIcon.svg);
     background-size: cover;
+    z-index: 2;
   }
   .burger__button_active{
     

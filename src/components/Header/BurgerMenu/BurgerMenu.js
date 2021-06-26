@@ -1,10 +1,15 @@
-function BurgerMenu() {
-    function toglleBurgerMenu(e) {
-        console.log(e);
-     
-     e.target.classList.toggle("burger__button_active");
-    }
-
-return (<><div onClick = {toglleBurgerMenu} className="burger__button"></div></>)
-};
-export default BurgerMenu
+function BurgerMenu(props) {
+  return (
+    <>
+      <div
+        onClick={props.onClick}
+        className={
+          props.toggle === true
+            ? "burger__button burger__button_active"
+            : "burger__button "
+        }
+      ></div>
+    </>
+  );
+}
+export default BurgerMenu;

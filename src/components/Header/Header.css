@@ -41,6 +41,7 @@
   list-style: none;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
 }
 .header__nav {
   display: flex;
@@ -57,12 +58,33 @@
 @media screen and (max-width: 984px) {
   .header__nav {
     display: none;
+    top: 0;
+    right: 0;
+    width: 520px;
+    height: 100%;
+    justify-content: space-around;
+    flex-direction: column;
+    position: absolute;
+    background: white;
+    z-index: 1;
+  }
+  .header__nav_active {
+    display: flex;
   }
   .header {
     padding: 0 30px;
   }
+  .header__list {
+    padding: 0;
+    flex-direction: column;
+  }
+  .header__link {
+    margin: 14px;
+    font-size: 18px;
+    line-height: 22px;
+  }
 }
-@media screen and (max-width: 610px){
+@media screen and (max-width: 610px) {
   .header {
     padding: 0 14px;
   }
