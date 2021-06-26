@@ -22,7 +22,7 @@ function MoviesCard() {
           </p>
         </div>
         <button
-          className={`movies-card__check movies-card__check_disable 
+          className={`movies-card__check movies-card__check_delete 
           
           `}
           //   onClick={handleLikeClick}

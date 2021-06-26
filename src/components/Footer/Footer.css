@@ -29,3 +29,28 @@
 .footer__list {
   display: flex;
 }
+
+@media screen and (max-width: 984px) {
+  .footer {
+    padding: 0 30px;
+  }
+}
+@media screen and (max-width: 610px) {
+  .footer {
+    padding: 0 14px;
+    align-items: center;
+    flex-direction: column;
+  }
+  .footer__list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+  }
+  .footer__link {
+  margin: 0;
+  }.footer__container {
+    align-items: center;
+    flex-direction: column;
+  }
+}

@@ -1,18 +1,20 @@
+@import url(./BurgerMenu/BurgerMenu.css);
 .header {
   display: flex;
   padding: 0 70px;
   height: 74px;
   background: #dddee3;
   align-items: center;
+  justify-content: space-between;
 }
-.header_style_white{
+.header_style_white {
   background: none;
 }
 .header__human-logo {
   margin-left: 10px;
   width: 30px;
   height: 30px;
-  background: #F4F4F4;
+  background: #f4f4f4;
   background-image: url(../../images/imagesheader.svg);
   background-size: 10px;
   background-position: center;
@@ -22,8 +24,8 @@
 .header__link {
   margin-right: 16px;
   display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
+  flex-direction: row;
+  flex-wrap: nowrap;
 }
 .header__link_style-button {
   display: flex;
@@ -44,9 +46,24 @@
   display: flex;
   width: 100%;
   justify-content: flex-end;
- 
+
   align-items: center;
 }
-.header__nav_space-between{
-   justify-content: space-between;
+
+.header__nav_space-between {
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 984px) {
+  .header__nav {
+    display: none;
+  }
+  .header {
+    padding: 0 30px;
+  }
+}
+@media screen and (max-width: 610px){
+  .header {
+    padding: 0 14px;
+  }
 }

@@ -1,22 +1,22 @@
-import { Link } from "react-router-dom";
+import linkPic from '../../../images/font-main.svg' ;
 function Portfolio() {
   return (
     <section className="portfolio"><h3 className="portfolio__title">Портфолио</h3>
       <ul className="portfolio__list">
         <li>
-          <Link to=" " className="portfolio__link link">
+          <a href=" " className="portfolio__link link">
             Статичный сайт
-          </Link>
+         <img src={linkPic} alt=""></img> </a>
         </li>
         <li>
-          <Link to=" " className=" link portfolio__link">
+          <a href=" " className=" link portfolio__link">
             Адаптивный сайт
-          </Link>
+            <img src={linkPic} alt=""></img> </a>
         </li>
         <li>
-          <Link to=" " className=" link portfolio__link">
+          <a href=" " className=" link portfolio__link">
             Одностраничное приложение
-          </Link>
+            <img src={linkPic} alt=""></img> </a>
         </li>
       </ul>{" "}
     </section>

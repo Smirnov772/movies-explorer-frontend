@@ -41,3 +41,20 @@
   height: 304px;
   width: 310px;
 }
+@media screen and (max-width: 984px) {
+  .promo__title {
+    text-align: center;
+    font-size: 40px;
+    line-height: 50px;
+    margin-top: 45px;
+  }
+  .promo {
+    flex-direction: column-reverse;
+    align-items: center;
+    padding: 75px 50px;
+  }
+  .promo__container {
+    align-items: center;
+  }
+
+}

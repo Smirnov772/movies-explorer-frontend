@@ -40,7 +40,6 @@
   line-height: 17px;
   text-align: center;
   padding-top: 9px;
-  
 }
 .line-tech__text_style-blue {
   background: #3456f3;
@@ -55,6 +54,30 @@
   display: flex;
   padding-top: 23px;
   justify-content: center;
-  color: #A0A0A0;
+  color: #a0a0a0;
 }
 
+@media screen and (max-width: 984px) {
+  .about-project {
+    padding: 90px 50px;
+  }
+}
+@media screen and (max-width: 610px) {
+  .about-project {
+    padding: 70px 14px;
+  }
+  .about-project__title {
+    font-size: 18px;
+    line-height: 22px;
+    text-align: start;
+  }
+  .about-project__subtitle {
+    font-size: 11px;
+    line-height: 16px;
+    text-align: start;
+  }
+  .about-project__list {
+    padding: 32px 0 60px;
+    flex-direction: column;
+  }
+}

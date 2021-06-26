@@ -9,8 +9,8 @@
   color: #3456f3;
 }
 .not-found-page {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 .not-found-page__404 {
   font-weight: normal;
@@ -25,4 +25,11 @@
   line-height: 19px;
   text-align: center;
   margin: 0;
+}
+
+@media screen and (max-width: 420px) {
+  .not-found-page__404 {
+    font-size: 80px;
+    line-height: 97px;
+  }
 }

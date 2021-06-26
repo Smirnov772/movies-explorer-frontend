@@ -8,7 +8,7 @@ import Register from "../Register/Register";
 import Profile from "../Profile/Profile";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
-import { Route, Switch, useRouteMatch } from "react-router-dom";
+import { Route, Switch, } from "react-router-dom";
 import "./App.css";
 
 function App() {

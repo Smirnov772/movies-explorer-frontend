@@ -84,3 +84,8 @@ line-height: 18px;
   transform: translateX(16px);
   background: #2BE080;
 }
+
+@media screen and (max-width: 984px) {
+  .search-form {
+    margin: 70px 30px 80px;}
+}
