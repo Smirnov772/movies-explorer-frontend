@@ -1,0 +1,21 @@
+.burger__button {
+  display: none;
+}
+
+@media screen and (max-width: 984px) {
+  .burger__button {
+    display: block;
+    width: 44px;
+    height: 44px;
+    transition: 0.3s;
+    cursor: pointer;
+    background: url(../../../images/burgerIcon.svg);
+    background-size: cover;
+    z-index: 2;
+  }
+  .burger__button_active{
+    
+    background: url(../../../images/burger-close.svg);
+    background-size: cover;
+  }
+}
