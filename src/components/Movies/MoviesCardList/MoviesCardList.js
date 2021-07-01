@@ -1,20 +1,16 @@
 import MoviesCard from "../MoviesCard/MoviesCard";
-function MoviesCardList() {
+function MoviesCardList(props) {
   return (
     <section className="movies-card-list">
-      <MoviesCard></MoviesCard>
-      <MoviesCard></MoviesCard>
-      <MoviesCard></MoviesCard>
-      <MoviesCard></MoviesCard>
-      <MoviesCard></MoviesCard>
-      <MoviesCard></MoviesCard>
-      <MoviesCard></MoviesCard>
-      <MoviesCard></MoviesCard>
-      <MoviesCard></MoviesCard>
-      <MoviesCard></MoviesCard>
-      <MoviesCard></MoviesCard>
-      <MoviesCard></MoviesCard>
-      
+        
+        {props.movieCard.map((item) => (
+          <MoviesCard
+          name={item.nameRU}
+          image={item.image.url}
+          duration={item.duration}
+          />
+        ))}
+    
     </section>
     
   );

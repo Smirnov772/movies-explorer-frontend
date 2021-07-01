@@ -1,0 +1,106 @@
+const onError = (res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject("Сервер не доступен");
+  };
+  
+  class MovieApi {
+    constructor({ url, headers }) {
+      this._url = url;
+      // this._cohortId = cohortId;
+      this._headers = headers;
+    }
+    getMovies() {
+      return fetch(`${this._url}/beatfilm-movies`, {
+        method: "GET",
+        headers: this._headers
+      }).then(onError);
+    }
+  
+    addCard(dataCards) {
+      return fetch(`${this._url}/cards`, {
+        method: "POST",
+        headers: {...this._headers, "Authorization": `Bearer ${localStorage.getItem("JWT")}`},
+        'credentials': 'include',
+        body: JSON.stringify({
+          name: `${dataCards.name}`,
+          link: `${dataCards.link}`,
+        }),
+      }).then(onError);
+    }
+  
+    getUserInfo() {
+      return fetch(`${this._url}/users/me`, {
+        method: "GET",
+        headers: {...this._headers, "Authorization": `Bearer ${localStorage.getItem("JWT")}`},
+        'credentials': 'include',
+      }).then(onError);
+    }
+  
+    renameUser(name, job) {
+      return fetch(`${this._url}/users/me`, {
+        method: "PATCH",
+        headers: {...this._headers, "Authorization": `Bearer ${localStorage.getItem("JWT")}`},
+        'credentials': 'include',
+        body: JSON.stringify({
+          name: `${name}`,
+          about: `${job}`,
+        }),
+      }).then(onError);
+    }
+  
+    removeCard(id) {
+      console.log(id)
+      return fetch(`${this._url}/cards/${id}`, {
+        method: "DELETE",
+        headers: {...this._headers, "Authorization": `Bearer ${localStorage.getItem("JWT")}`},
+        'credentials': 'include',
+      }).then(onError);
+    }
+    editAvatar(avatarId) {
+      console.log(avatarId)
+      return fetch(`${this._url}/users/me/avatar`, {
+        method: "PATCH",
+        headers: {...this._headers, "Authorization": `Bearer ${localStorage.getItem("JWT")}`},
+        'credentials': 'include',
+        body: JSON.stringify({
+          avatar: `${avatarId}`,
+        }),
+      }).then(onError);
+    }
+    setLike(id) {
+      console.log(id);
+      return fetch(`${this._url}/cards/${id}/likes`, {
+        method: "PUT",
+        headers: {...this._headers, "Authorization": `Bearer ${localStorage.getItem("JWT")}`},
+        'credentials': 'include',
+      }).then(onError);
+    }
+    removeLike(id) {
+      console.log(id);
+      return fetch(`${this._url}/cards/${id}/likes`, {
+        method: "DELETE",
+        headers: {...this._headers, "Authorization": `Bearer ${localStorage.getItem("JWT")}`},
+        'credentials': 'include',
+      }).then(onError);
+    }
+    changeLikeCardStatus(id, isLiked) {
+      console.log(id, isLiked);
+      return fetch(`${this._url}/cards/${id}/likes`, {
+        method: isLiked ? "PUT" : "DELETE",
+        headers: {...this._headers, "Authorization": `Bearer ${localStorage.getItem("JWT")}`},
+        'credentials': 'include',
+      }).then(onError);
+    }
+  }
+  
+  const movieApi = new MovieApi({
+    url: "https://api.nomoreparties.co",
+    headers: {
+      "Content-Type": "application/json"
+    },
+  });
+  
+  export default movieApi;
+  

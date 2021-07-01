@@ -1,10 +1,18 @@
-import logo from "../../../images/pic__COLOR_pic.png";
-function MoviesCard() {
+
+function MoviesCard(props) {
+  function timeMovies() {
+    const time = props.duration;
+    const hours = Math.floor(time / 60);
+    let minutes = time % 60;
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+      
+    return `${hours}ч ${minutes}м`;
+  }
   return (
     <div className="movies-card">
       <img
         className="movies-card__image"
-        src={logo}
+        src={`https://api.nomoreparties.co${props.image}`}
         alt="Картинка"
         // onClick={handleClick}
       />
@@ -12,12 +20,9 @@ function MoviesCard() {
         {" "}
         <div className="movies-card__discription">
           {" "}
-          <p className="movies-card__paragraph">
-            33 слова о дизайне
-            {/* {props.name} */}
-          </p>
+          <p className="movies-card__paragraph">{props.name}</p>
           <p className="movies-card__time">
-            1ч42м
+            {timeMovies()}
             {/* {props.name} */}
           </p>
         </div>
