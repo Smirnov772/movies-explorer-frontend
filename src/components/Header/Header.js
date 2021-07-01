@@ -16,6 +16,9 @@ function Header() {
       ? setToggleBurgerMenu(true)
       : setToggleBurgerMenu(false);
   }
+  function closeBurgerMenu() {
+    setToggleBurgerMenu(false)
+  }
   console.log(toggleBurgerMenu);
   let location = useLocation();
   console.log(location.pathname);
@@ -34,7 +37,7 @@ function Header() {
       ></BurgerMenu>
       <Navigation
         handlerBurgerMenu={toggleBurgerMenu}
-        clickLink = {BurgerMenuClick}
+        clickLink = {closeBurgerMenu}
       ></Navigation>
     </header>
   );

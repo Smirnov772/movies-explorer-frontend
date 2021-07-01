@@ -1,11 +1,19 @@
-import { Link, Route, useLocation } from "react-router-dom";
+import { NavLink, Link, Route, useLocation } from "react-router-dom";
 function Navigation(props) {
   let location = useLocation();
   console.log(location.pathname);
   console.log(props.handlerBurgerMenu);
   return (
     <>
-      {" "}
+      <div
+        onClick={props.clickLink}
+        className={
+          props.handlerBurgerMenu === true
+            ? "navigation__external header__nav_active"
+            : "navigation__external"
+        }
+      ></div>
+
       <nav
         className={
           (location.pathname !== "/"
@@ -34,22 +42,24 @@ function Navigation(props) {
                   ""
                 )}
                 <li>
-                  <Link
+                  <NavLink
                     to="movies"
+                    activeClassName="link_active"
                     onClick={props.clickLink}
                     className="header__link link"
                   >
                     Фильмы
-                  </Link>
+                  </NavLink>
                 </li>
                 <li>
-                  <Link
+                  <NavLink
                     to="saved-movies"
+                    activeClassName="link_active"
                     onClick={props.clickLink}
                     className="header__link link"
                   >
                     Сохраненные фильмы
-                  </Link>
+                  </NavLink>
                 </li>
               </ul>
             ) : (

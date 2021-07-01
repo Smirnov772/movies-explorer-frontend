@@ -57,10 +57,14 @@
 
 @media screen and (max-width: 984px) {
   .header__nav {
-    display: none;
+    visibility: hidden;
+    box-shadow: 2px 12px 10px 10px rgb(0 0 0 / 5%);
+    transition: opacity 0.5s ease, visibility 0s ease 0.5s;
+    display: flex;
+    opacity: 0;
     top: 0;
     right: 0;
-    width: 520px;
+    max-width: 520px;
     height: 100%;
     justify-content: space-around;
     flex-direction: column;
@@ -68,8 +72,21 @@
     background: white;
     z-index: 1;
   }
+  .navigation__external {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0s ease 0.5s;
+    z-index: 1;
+  }
   .header__nav_active {
-    display: flex;
+    visibility: visible;
+    opacity: 1;
+    transition: opacity .5s ease;
   }
   .header {
     padding: 0 30px;
