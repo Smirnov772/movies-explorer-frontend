@@ -4,7 +4,7 @@ import Navigation from "../Navigation/Navigation";
 import logo from "../../images/logo.svg";
 import { useLocation } from "react-router-dom";
 import BurgerMenu from "./BurgerMenu/BurgerMenu";
-function Header() {
+function Header(props) {
   //   function toggleBurgerMenu(e) {
   //     console.log(e);
 
@@ -32,7 +32,7 @@ function Header() {
         onClick={BurgerMenuClick}
         toggle={toggleBurgerMenu}
       ></BurgerMenu>
-      <Navigation
+      <Navigation loggedIn={props.loggedIn}
         handlerBurgerMenu={toggleBurgerMenu}
         clickLink = {BurgerMenuClick}
       ></Navigation>

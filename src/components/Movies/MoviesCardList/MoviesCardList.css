@@ -2,9 +2,9 @@
   padding: 70px;
   align-items: center;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  grid-template-columns: repeat(auto-fill, 270px);
+
   grid-gap: 32px 20px;
-  -webkit-justify-content: center;
   justify-content: center;
 }
 @media screen and (max-width: 984px) {

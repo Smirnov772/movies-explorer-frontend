@@ -1,25 +1,22 @@
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import Preloader from "./Preloader/Preloader";
 import SearchForm from "./SearchForm/SearchForm";
-import movieApi from  '../../utils/MoviesApi' ;
-import React, { useEffect, useState } from "react";
+import movieApi from "../../utils/MoviesApi";
+import React, { useState } from "react";
 function Movies() {
   const [movieCard, setMovieCard] = useState([]);
-  useEffect(() => {
+  function getMovies() {
     movieApi
       .getMovies()
       .then((dataCard) => {
         setMovieCard(dataCard);
       })
       .catch((err) => console.log(err));
-  }, []);
-  console.log(movieApi.url);
+  }
   return (
     <section className="movies">
-      <SearchForm></SearchForm>
-      <MoviesCardList movieCard={movieCard}>
-      
-      </MoviesCardList>
+      <SearchForm handleClick={getMovies}></SearchForm>
+      <MoviesCardList movieCard={movieCard}></MoviesCardList>
       <Preloader></Preloader>
     </section>
   );

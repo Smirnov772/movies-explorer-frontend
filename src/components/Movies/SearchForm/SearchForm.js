@@ -1,12 +1,15 @@
 import icon from "../../../images/icon-search.svg";
-function SearchForm() {
+function SearchForm(props) {
+  function handleClick(){
+    props.handleClick(props)
+  }
   return (
     <section className="search-form">
       <form className="search-form__items">
         {" "}
         <img className="search-form__icon" src={icon} alt="Иконка" />{" "}
         <input required placeholder="Фильм" className="search-form__input" />
-        <button className="search-form__button" type="submit">
+        <button onClick={handleClick}className="search-form__button" type="submit">
           Найти
         </button></form>
         <label className="checkbox">
