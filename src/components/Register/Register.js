@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
-import { currentUserContext } from "../contexts/CurrentUserContext";
 function Register(props) {
   const [name, setName] = React.useState("");
 
@@ -34,7 +33,7 @@ function Register(props) {
       </Link>
       <p className="user-auth__paragraph">Добро пожаловать!</p>
       <form onSubmit={handleSubmit} className="user-auth__form">
-        <p class="user-auth__input-name">Имя</p>
+        <p className="user-auth__input-name">Имя</p>
         <input
           required
           value={name}
@@ -42,7 +41,7 @@ function Register(props) {
           className="user-auth__input"
           type="name"
         ></input>
-        <p class="user-auth__input-name">E-mail</p>
+        <p className="user-auth__input-name">E-mail</p>
         <input
           required
           onChange={handleEmailChange}
@@ -51,13 +50,13 @@ function Register(props) {
           type="email"
           className="user-auth__input"
         ></input>
-        <p class="user-auth__input-name">Пароль</p>
+        <p className="user-auth__input-name">Пароль</p>
         <input
           required
           type="password"
           onChange={handlePasswordChange}
           value={password}
-          type="password"
+          
           className="user-auth__input"
         ></input>
         <button type="submit" className="user-auth__button">

@@ -1,23 +1,38 @@
 import icon from "../../../images/icon-search.svg";
+import React, { useState } from "react";
 function SearchForm(props) {
-  function handleClick(){
-    props.handleClick(props)
+  const [imputSearch, setImputSearch] = useState([]);
+  function handleSearchChange(e) {
+    setImputSearch(e.target.value);
   }
+  function handleSubmit(e) {
+    e.preventDefault();
+    props.onSubmit(imputSearch);
+  }
+  // function handleImput(){
+  //   props.handleSearchChange(props)
+  // }
+
   return (
     <section className="search-form">
-      <form className="search-form__items">
+      <form onSubmit={handleSubmit} className="search-form__items">
         {" "}
         <img className="search-form__icon" src={icon} alt="Иконка" />{" "}
-        <input required placeholder="Фильм" className="search-form__input" />
-        <button onClick={handleClick}className="search-form__button" type="submit">
+        <input
+          onChange={handleSearchChange}
+          placeholder="Фильм"
+          type="search"
+          className="search-form__input"
+        />
+        <button className="search-form__button" type="submit">
           Найти
-        </button></form>
-        <label className="checkbox">
-          <input type="checkbox" />
-          <span className="checkbox__switch"></span>
-          <p className="checkbox__name">Короткометражки</p>{" "}
-        </label>
-      
+        </button>
+      </form>
+      <label className="checkbox">
+        <input type="checkbox" />
+        <span className="checkbox__switch"></span>
+        <p className="checkbox__name">Короткометражки</p>{" "}
+      </label>
     </section>
   );
 }

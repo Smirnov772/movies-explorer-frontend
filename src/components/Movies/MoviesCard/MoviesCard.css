@@ -45,6 +45,7 @@ height: 100%;
   background: #f4f4f4;
 }
 .movies-card__check_delete {
+  grid-area: like;
   border-radius: 0;
   transition: 0.15s;
   border: none;

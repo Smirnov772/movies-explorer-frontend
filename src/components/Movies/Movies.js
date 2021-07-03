@@ -2,21 +2,34 @@ import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import Preloader from "./Preloader/Preloader";
 import SearchForm from "./SearchForm/SearchForm";
 import movieApi from "../../utils/MoviesApi";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 function Movies() {
-  const [movieCard, setMovieCard] = useState([]);
-  function getMovies() {
+  const [moviesCard, setMoviesCard] = useState([]);
+  const [filterMovies, setFilterMovies] = useState([]);
+
+  useEffect(() => {
     movieApi
       .getMovies()
-      .then((dataCard) => {
-        setMovieCard(dataCard);
-      })
+      .then((dataCard) => setMoviesCard(dataCard))
+
       .catch((err) => console.log(err));
+  }, []);
+
+  function imputSearch(input) {
+    const filter = moviesCard.filter((item) => {
+      if (input == "") {
+        return item;
+      } else if (item.nameRU.toLowerCase().includes(input.toLowerCase())) {
+        return item;
+      }
+    });
+    setFilterMovies(filter);
   }
+
   return (
     <section className="movies">
-      <SearchForm handleClick={getMovies}></SearchForm>
-      <MoviesCardList movieCard={movieCard}></MoviesCardList>
+      <SearchForm onSubmit={imputSearch}></SearchForm>
+      <MoviesCardList movieCard={filterMovies}></MoviesCardList>
       <Preloader></Preloader>
     </section>
   );

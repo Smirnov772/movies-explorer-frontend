@@ -10,27 +10,21 @@ import Profile from "../Profile/Profile";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
 import apiAuth from "../../utils/apiAuth";
+import mainApi from "../../utils/MainApi";
 import ProtectedRoute from "../ProtectedRoute";
+import { currentUserContext } from "../contexts/CurrentUserContext";
 import "./App.css";
-import MoviesCardList from "../SavedMovies/MoviesCardList/MoviesCardList";
 
 function App() {
   const history = useHistory();
-  const [currentUser, setCurrentUser] = useState([]);
+  const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
-  const [userData, setUserData] = useState([]);
-  useEffect(() => {
-    checkToken();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  
   function checkToken() {
     const jwt = localStorage.getItem("JWT");
     if (jwt) {
       apiAuth
         .JWTValid(jwt)
         .then((res) => {
-          setUserData({ ...userData, email: res.email });
           setLoggedIn(true);
           console.log(`true ${jwt}`);
         })
@@ -39,6 +33,24 @@ function App() {
         });
     }
   }
+  useEffect(() => {
+    checkToken();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (loggedIn) {
+      mainApi
+        .getUserInfo()
+        .then((dataUser) => {
+          setCurrentUser(dataUser);
+        })
+        .catch((err) => console.log(err));
+      history.push("/");
+    }
+  }, [history, loggedIn]);
+
+
   function userRegister(input) {
     apiAuth
       .register(input.name, input.email, input.password)
@@ -57,10 +69,11 @@ function App() {
     apiAuth
       .authorize(input.password, input.email)
       .then((data) => {
+        setCurrentUser({ ...currentUser, email: input.email });
         localStorage.setItem("JWT", data.token);
         setLoggedIn(true);
         history.push("/movies");
-        console.log(`then ${data.token}`);
+        console.log(data);
 
         return;
       })
@@ -68,9 +81,14 @@ function App() {
         console.log(err);
       });
   }
-
+  function userRemove() {
+    localStorage.removeItem("JWT");
+    history.push("/");
+    setLoggedIn(false);
+    setCurrentUser("");
+  }
   return (
-    <>
+    <currentUserContext.Provider value={currentUser}>
       <Switch>
         <Route path="/signup">
           <Register onSubmit={userRegister}> </Register>
@@ -83,7 +101,11 @@ function App() {
 
         <Route path="/movies">
           <Header loggedIn={loggedIn}></Header>
-          <ProtectedRoute loggedIn={loggedIn} path="/movies" component={Movies}></ProtectedRoute>
+          <ProtectedRoute
+            loggedIn={loggedIn}
+            path="/movies"
+            component={Movies}
+          ></ProtectedRoute>
           <Footer></Footer>
         </Route>
         <Route path="/saved-movies">
@@ -99,6 +121,7 @@ function App() {
         <Route path="/profile">
           <Header loggedIn={loggedIn}></Header>
           <ProtectedRoute
+            loggedOut={userRemove}
             loggedIn={loggedIn}
             path="/profile"
             component={Profile}
@@ -115,7 +138,7 @@ function App() {
           <NotFoundPage> </NotFoundPage>
         </Route>
       </Switch>
-    </>
+    </currentUserContext.Provider>
   );
 }
 

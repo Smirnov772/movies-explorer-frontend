@@ -1,15 +1,37 @@
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
-import Preloader from "../Movies/Preloader/Preloader";
-import SearchForm from "../Movies/SearchForm/SearchForm";
-function SavedMovies() {
+import mainApi from "../../utils/MainApi";
+import React, { useEffect, useState } from "react";
+import { currentUserContext } from "../contexts/CurrentUserContext";
+
+
+function Movies() {
+  const currentUser = React.useContext(currentUserContext);
+  const [movieCard, setMovieCard] = useState([]);
+  useEffect(() => {
+    mainApi
+      .getMeMovies()
+      .then((dataCard) => {
+        setMovieCard(dataCard.filter((i) => i.owner=== currentUser._id ));
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  function handleCardDelete(deletedCard) {
+    console.log(deletedCard);
+    mainApi
+      .removeCard(deletedCard._id)
+      .then(() => {
+        setMovieCard(movieCard.filter((i) => i._id !== deletedCard._id));
+      })
+      .catch((err) => console.log(err));
+  }
+
   return (
     <section className="movies">
-      <SearchForm></SearchForm>
-      <MoviesCardList>
-      
-      </MoviesCardList>
-    
+      <MoviesCardList
+        onCardDelete={handleCardDelete}
+        movieCard={movieCard}
+      ></MoviesCardList>
     </section>
   );
 }
-export default SavedMovies;
+export default Movies;

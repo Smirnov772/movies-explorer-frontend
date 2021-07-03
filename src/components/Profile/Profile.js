@@ -1,4 +1,4 @@
-function Profile() {
+function Profile(props) {
   return (
     <section className="profile">
       <h3 className="profile__user">Привет, name </h3>
@@ -17,7 +17,7 @@ function Profile() {
         <button className="profile__button " type="submit">
           Редактировать
         </button>
-      <button className="profile__button profile__button_text-red" type="submit">
+      <button onClick={props.loggedOut}className="profile__button profile__button_text-red" type="submit">
         Выйти из аккаунта
       </button>
     </section>

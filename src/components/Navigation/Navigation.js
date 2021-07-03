@@ -1,26 +1,22 @@
-import { Link, Route, useLocation } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 function Navigation(props) {
-  let location = useLocation();
-  console.log(location.pathname);
-  console.log(props.handlerBurgerMenu);
   return (
-    <>
+    <Route>
       {" "}
       <nav
         className={
-          (location.pathname !== "/"
-            ? "header__nav header__nav_space-between"
-            : "header__nav",
           props.handlerBurgerMenu === true
             ? "header__nav header__nav_active"
-            : "header__nav")
+            : props.loggedIn === true
+            ? "header__nav header__nav_space-between"
+            : "header__nav"
         }
       >
         <Route>
           {() =>
             props.loggedIn === true ? (
               <>
-                <ul className="header__list">
+                <ul className="header__list ">
                   {props.handlerBurgerMenu === true ? (
                     <li>
                       <Link
@@ -54,7 +50,11 @@ function Navigation(props) {
                   </li>
                 </ul>
 
-                <Link to="profile" className="header__link link">
+                <Link
+                  to="profile"
+                  onClick={props.clickLink}
+                  className="header__link link"
+                >
                   Аккаунт <div className="header__human-logo"></div>
                 </Link>
               </>
@@ -63,7 +63,11 @@ function Navigation(props) {
                 <Route path="/">
                   {" "}
                   <li>
-                    <Link to="signup" className="header__link link">
+                    <Link
+                      to="signup"
+                      onClick={props.clickLink}
+                      className="header__link link"
+                    >
                       Регистрация
                     </Link>
                   </li>
@@ -71,6 +75,7 @@ function Navigation(props) {
                     <div>
                       <Link
                         to="signin"
+                        onClick={props.clickLink}
                         className="header__link link header__link_style-button"
                       >
                         Войти
@@ -83,7 +88,7 @@ function Navigation(props) {
           }
         </Route>
       </nav>
-    </>
+    </Route>
   );
 }
 export default Navigation;

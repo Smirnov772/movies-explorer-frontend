@@ -9,25 +9,28 @@ function MoviesCard(props) {
   function handleClick() {
     props.clickImage(props.trailer);
   }
+  function handleClickLike(){
+    props.clickLike(props)
+  }
   return (
     <div className="movies-card">
       {" "}
       <img
         className="movies-card__image"
-        src={`https://api.nomoreparties.co${props.image}`}
+        src={props.image}
         alt="Картинка"
         onClick={handleClick}
       />{" "}
       <div className="movies-card__discription">
         {" "}
-        <p className="movies-card__paragraph">{props.name}</p>
+        <p className="movies-card__paragraph">{props.nameRU}</p>
         <p className="movies-card__time">
           {timeMovies(props.duration)}
         </p>
       </div>
       <button
         className={`movies-card__check  movies-card__check_disable         `}
-        //   onClick={handleLikeClick}
+          onClick={handleClickLike}
         type="button"
       ></button>
     </div>

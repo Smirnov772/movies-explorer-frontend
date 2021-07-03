@@ -26,7 +26,7 @@ function Login(props) {
       </Link>
       <p className="user-auth__paragraph">Рады видеть!</p>
       <form onSubmit={handleSubmit} className="user-auth__form">
-        <p class="user-auth__input-name">E-mail</p>
+        <p className="user-auth__input-name">E-mail</p>
         <input
           required
           onChange={handleEmailChange}
@@ -34,9 +34,9 @@ function Login(props) {
           type="email"
           placeholder="Email"
           className="user-auth__input"
-          type="email"
+          
         ></input>
-        <p class="user-auth__input-name">Пароль</p>
+        <p className="user-auth__input-name">Пароль</p>
         <input
           required
           onChange={handlePasswordChange}
@@ -44,7 +44,7 @@ function Login(props) {
           type="password"
           placeholder="Пароль"
           className="user-auth__input"
-          type="password"
+        
         ></input>
         <button type="submit" className="user-auth__button">
           Войти

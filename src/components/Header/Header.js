@@ -11,14 +11,17 @@ function Header(props) {
   //  e.target.classList.toggle("burger__button_active");
   // }
   const [toggleBurgerMenu, setToggleBurgerMenu] = useState(false);
-  function BurgerMenuClick() {
+  function BurgerMenuToggle() {
     toggleBurgerMenu === false
       ? setToggleBurgerMenu(true)
       : setToggleBurgerMenu(false);
   }
-  console.log(toggleBurgerMenu);
+  function BurgerMenuClose() {
+    setToggleBurgerMenu(false);
+  }
+
   let location = useLocation();
-  console.log(location.pathname);
+
   return (
     <header
       className={
@@ -29,12 +32,13 @@ function Header(props) {
         <img src={logo} alt="Логотип" />{" "}
       </Link>
       <BurgerMenu
-        onClick={BurgerMenuClick}
+        onClick={BurgerMenuToggle}
         toggle={toggleBurgerMenu}
       ></BurgerMenu>
-      <Navigation loggedIn={props.loggedIn}
+      <Navigation
+        loggedIn={props.loggedIn}
         handlerBurgerMenu={toggleBurgerMenu}
-        clickLink = {BurgerMenuClick}
+        clickLink={BurgerMenuClose}
       ></Navigation>
     </header>
   );
