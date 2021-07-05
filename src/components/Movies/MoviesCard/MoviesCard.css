@@ -61,9 +61,7 @@ height: 100%;
   white-space  : nowrap;
   overflow     : hidden; */
 }
-.movies-card__check_disable:focus {
-  background: #2be080;
-}
+
 .movies-card__check_disable:hover {
   border: 2px solid #2be080;
 }

@@ -5,12 +5,15 @@ function MoviesCardList(props) {
     window.open(url);
   }
 
+
   return (
     <section className="movies-card-list">
       {props.movieCard.map((item) => (
         <MoviesCard
+          
           key={item._id}
           _id={item._id}
+          movieId={item.movieId}
           image={item.image}
           trailer={item.trailer}
           duration={item.duration}

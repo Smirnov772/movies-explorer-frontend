@@ -1,7 +1,9 @@
 import icon from "../../../images/icon-search.svg";
 import React, { useState } from "react";
 function SearchForm(props) {
-  const [imputSearch, setImputSearch] = useState([]);
+  const [imputSearch, setImputSearch] = useState("");
+  
+  
   function handleSearchChange(e) {
     setImputSearch(e.target.value);
   }
@@ -29,7 +31,7 @@ function SearchForm(props) {
         </button>
       </form>
       <label className="checkbox">
-        <input type="checkbox" />
+        <input type="checkbox" onChange={props.onChange}/>
         <span className="checkbox__switch"></span>
         <p className="checkbox__name">Короткометражки</p>{" "}
       </label>

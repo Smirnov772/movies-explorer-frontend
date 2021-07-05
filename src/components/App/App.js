@@ -1,5 +1,5 @@
-import { Route, Switch, useHistory } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import { Route, Switch, useHistory} from "react-router-dom";
+import React, { useEffect, useState, prevState } from "react";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Movies from "../Movies/Movies";
@@ -11,6 +11,7 @@ import SavedMovies from "../SavedMovies/SavedMovies";
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
 import apiAuth from "../../utils/apiAuth";
 import mainApi from "../../utils/MainApi";
+import moviesApi from "../../utils/MoviesApi";
 import ProtectedRoute from "../ProtectedRoute";
 import { currentUserContext } from "../contexts/CurrentUserContext";
 import "./App.css";
@@ -19,6 +20,14 @@ function App() {
   const history = useHistory();
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
+  const [filterMovies, setFilterMovies] = useState([]);
+  const [oldData, setOldData] = useState("");
+  const [moviesCards, setMoviesCards] = useState("");
+  const [savedMovie, setSavedMovie] = useState([]);
+  const dataCard = JSON.parse(localStorage.getItem("dataCard"));
+  const dataFilter = JSON.parse(localStorage.getItem("datafilter"));
+  const dataSaveMovie = JSON.parse(localStorage.getItem("dataSaveMovie"));
+
   function checkToken() {
     const jwt = localStorage.getItem("JWT");
     if (jwt) {
@@ -36,7 +45,7 @@ function App() {
   useEffect(() => {
     checkToken();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [loggedIn]);
 
   useEffect(() => {
     if (loggedIn) {
@@ -50,7 +59,94 @@ function App() {
     }
   }, [history, loggedIn]);
 
+  useEffect(() => {
+    if (loggedIn) {
+      mainApi
+        .getMeMovies()
+        .then((dataCard) => {
+          localStorage.setItem(
+            "dataSaveMovie",
+            JSON.stringify(dataCard.filter((i) => i.owner === currentUser._id))
+          );
+          setSavedMovie(dataCard.filter((i) => i.owner === currentUser._id));
+          setCurrentUser([dataCard, ...currentUser]);
+          // setMovieCard(dataCard.filter((i) => i.owner === currentUser._id ));
+          // const saveDataMovie = JSON.parse(
+          //   localStorage.getItem("dataSaveMovie")
+          // );
+          // setMovieCard(saveDataMovie)
+          // console.log(saveDataMovie);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [loggedIn]);
 
+  useEffect(() => {
+    if (loggedIn) {
+      moviesApi
+        .getMovies()
+        .then((dataCard) => {
+          localStorage.setItem("dataCard", JSON.stringify(dataCard));
+        })
+
+        .catch((err) => console.log(err));
+    }
+  }, [loggedIn]);
+  // useEffect(() => {
+  //   setMoviesCards(filterMovies)
+  // }, [filterMovies]);
+
+  function imputSearch(input) {
+    // localStorage.setItem(
+    //   "datafilter",
+    //   JSON.stringify(
+    //     dataCard.filter((item) => {
+    //       if (input === "") {
+    //         return item;
+    //       } else if (item.nameRU.toLowerCase().includes(input.toLowerCase())) {
+    //         return item;
+    //       }
+    //     })
+    //   )
+    // );
+    
+    setFilterMovies(
+      dataCard.filter((item) => {
+        if (input === "") {
+          return "";
+        } else if (item.nameRU.toLowerCase().includes(input.toLowerCase()))  {
+          return item;
+        }
+      })
+    );
+
+    // setInputSearch(input);
+  }
+
+  function handleClickChange(card) {
+    const isClick = savedMovie.some((i) => i.movieId === card.movieId);
+    isClick ? handleCardDelete(card) : saveMovie(card);
+
+    // if (checkLike === true) {
+    //   setCheckLike(false);
+    //   handleCardDelete(card);
+    // } else {
+    //   setCheckLike(true);
+    //   saveMovie(card);
+    // }
+  }
+  //   function handleCardLike(card) {
+  //     const isLiked = card.likes.some((i) => i === currentUser._id);
+  //    console.log(card.likes===currentUser._id);
+  //    api
+  //      .changeLikeCardStatus(card._id, !isLiked)
+  //      .then((newCard) => {
+  //        setCards((state) =>
+  //          state.map((c) => (c._id === card._id ? newCard : c))
+  //        );
+  //      })
+  //      .catch((err) => console.log(err));
+  //  }
   function userRegister(input) {
     apiAuth
       .register(input.name, input.email, input.password)
@@ -87,6 +183,41 @@ function App() {
     setLoggedIn(false);
     setCurrentUser("");
   }
+
+  function handleCardDelete(deletedCard) {
+    const [delet] = savedMovie.filter((i) => i.movieId === deletedCard.movieId);
+    mainApi
+      .removeCard(delet._id)
+      .then((newCard) => {
+        
+        setSavedMovie(savedMovie.filter((i) => i._id !== newCard._id));
+        console.log("removeCard");
+      })
+      .catch((err) => console.log(err));
+  }
+  function saveMovie(card) {
+    console.log(card);
+    mainApi
+      .addMovie(card)
+      .then((newcard) => {
+        setSavedMovie([newcard, ...savedMovie]);
+        console.log("saveCard");
+      })
+
+      .catch((err) => console.log(err));
+  }
+  const [changeCheckbox, setChangeCheckbox] = useState(false);
+  const soldCheckbox = ({ target: { checked } }) => {
+    setChangeCheckbox(checked);
+    if (checked) {
+      setOldData(filterMovies)
+      setFilterMovies(filterMovies.filter((i) => i.duration < 40));
+    } else {
+      setFilterMovies(oldData);
+    }
+  };
+  console.log(changeCheckbox);
+
   return (
     <currentUserContext.Provider value={currentUser}>
       <Switch>
@@ -104,13 +235,20 @@ function App() {
           <ProtectedRoute
             loggedIn={loggedIn}
             path="/movies"
+            onChange={soldCheckbox}
             component={Movies}
+            onSubmit={imputSearch}
+            movies={filterMovies}
+            savedMovie={savedMovie}
+            clickChange={handleClickChange}
           ></ProtectedRoute>
           <Footer></Footer>
         </Route>
         <Route path="/saved-movies">
           <Header loggedIn={loggedIn}></Header>
           <ProtectedRoute
+            handleCardDelete={handleCardDelete}
+            movies={savedMovie}
             loggedIn={loggedIn}
             path="/saved-movies"
             component={SavedMovies}

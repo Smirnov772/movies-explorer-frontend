@@ -5,7 +5,7 @@ const onError = (res) => {
     return Promise.reject("Сервер не доступен");
   };
   
-  class MovieApi {
+  class MoviesApi {
     constructor({ url, headers }) {
       this._url = url;
       // this._cohortId = cohortId;
@@ -18,12 +18,12 @@ const onError = (res) => {
       }).then(onError);
     }
 }
-  const movieApi = new MovieApi({
+  const moviesApi = new MoviesApi({
     url: "https://api.nomoreparties.co",
     headers: {
       "Content-Type": "application/json"
     },
   });
   
-  export default movieApi;
+  export default moviesApi;
   

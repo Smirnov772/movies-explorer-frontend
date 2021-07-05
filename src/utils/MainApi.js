@@ -19,7 +19,7 @@ const onError = (res) => {
       }).then(onError);
     }
   
-    addMovie(dataMovie) {console.log(dataMovie.trailerLink)
+    addMovie(dataMovie) {
       return fetch(`${this._url}/movies`, {
         method: "POST",
         headers: {...this._headers, "Authorization": `Bearer ${localStorage.getItem("JWT")}`},
