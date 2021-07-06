@@ -23,6 +23,8 @@
 
 .profile__input {
   display: none;
+  text-align: end;
+  border: none;
 }
 
 .profile__button {

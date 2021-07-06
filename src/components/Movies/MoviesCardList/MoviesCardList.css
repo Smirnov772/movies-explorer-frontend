@@ -7,6 +7,25 @@
   grid-gap: 32px 20px;
   justify-content: center;
 }
+.more {
+  height: 166px;
+  display: flex;
+  justify-content: center;
+}
+.more__button {
+  margin-top: 50px;
+  width: 320px;
+  height: 35px;
+  border: none;
+  background: #f4f4f4;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+}
+.more_active_none{
+    display: none;
+}
 @media screen and (max-width: 984px) {
   .movies-card-list {
     border-top-width: 1px;

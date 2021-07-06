@@ -1,6 +1,3 @@
-import { currentUserContext } from "../../contexts/CurrentUserContext";
-// import React from "react";
-import { useState } from "react";
 
 function MoviesCard(props) {
   // const currentUser = React.useContext(currentUserContext);

@@ -1,5 +1,5 @@
-import { Route, Switch, useHistory} from "react-router-dom";
-import React, { useEffect, useState, prevState } from "react";
+import { Route, Switch, useHistory } from "react-router-dom";
+import React, { useEffect, useState} from "react";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Movies from "../Movies/Movies";
@@ -13,6 +13,7 @@ import apiAuth from "../../utils/apiAuth";
 import mainApi from "../../utils/MainApi";
 import moviesApi from "../../utils/MoviesApi";
 import ProtectedRoute from "../ProtectedRoute";
+import Preloader from "../Preloader/Preloader";
 import { currentUserContext } from "../contexts/CurrentUserContext";
 import "./App.css";
 
@@ -22,11 +23,11 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [filterMovies, setFilterMovies] = useState([]);
   const [oldData, setOldData] = useState("");
-  const [moviesCards, setMoviesCards] = useState("");
+  const [moviesCardsArray, setMoviesCardsArray] = useState([]);
   const [savedMovie, setSavedMovie] = useState([]);
   const dataCard = JSON.parse(localStorage.getItem("dataCard"));
-  const dataFilter = JSON.parse(localStorage.getItem("datafilter"));
-  const dataSaveMovie = JSON.parse(localStorage.getItem("dataSaveMovie"));
+  // const dataFilter = JSON.parse(localStorage.getItem("datafilter"));
+  // const dataSaveMovie = JSON.parse(localStorage.getItem("dataSaveMovie"));
 
   function checkToken() {
     const jwt = localStorage.getItem("JWT");
@@ -61,6 +62,7 @@ function App() {
 
   useEffect(() => {
     if (loggedIn) {
+      setPreloaderChange(true);
       mainApi
         .getMeMovies()
         .then((dataCard) => {
@@ -69,91 +71,84 @@ function App() {
             JSON.stringify(dataCard.filter((i) => i.owner === currentUser._id))
           );
           setSavedMovie(dataCard.filter((i) => i.owner === currentUser._id));
-          setCurrentUser([dataCard, ...currentUser]);
-          // setMovieCard(dataCard.filter((i) => i.owner === currentUser._id ));
-          // const saveDataMovie = JSON.parse(
-          //   localStorage.getItem("dataSaveMovie")
-          // );
-          // setMovieCard(saveDataMovie)
-          // console.log(saveDataMovie);
+          setPreloaderChange(false);
         })
         .catch((err) => console.log(err));
     }
-  }, [loggedIn]);
+  }, [currentUser._id, loggedIn]);
 
   useEffect(() => {
     if (loggedIn) {
+      setPreloaderChange(true);
       moviesApi
         .getMovies()
         .then((dataCard) => {
+          setPreloaderChange(false);
           localStorage.setItem("dataCard", JSON.stringify(dataCard));
         })
 
         .catch((err) => console.log(err));
     }
   }, [loggedIn]);
-  // useEffect(() => {
-  //   setMoviesCards(filterMovies)
-  // }, [filterMovies]);
 
   function imputSearch(input) {
-    // localStorage.setItem(
-    //   "datafilter",
-    //   JSON.stringify(
-    //     dataCard.filter((item) => {
-    //       if (input === "") {
-    //         return item;
-    //       } else if (item.nameRU.toLowerCase().includes(input.toLowerCase())) {
-    //         return item;
-    //       }
-    //     })
-    //   )
-    // );
-    
-    setFilterMovies(
-      dataCard.filter((item) => {
-        if (input === "") {
-          return "";
-        } else if (item.nameRU.toLowerCase().includes(input.toLowerCase()))  {
-          return item;
-        }
-      })
-    );
-
-    // setInputSearch(input);
+    const searchMovie = dataCard.filter((item) => {
+      if (input === "") {
+        return "";
+      } else if (item.nameRU.toLowerCase().includes(input.toLowerCase())) {
+        return item;
+      }  return "";
+    });
+    function widthArrray() {
+      if (window.innerWidth <= 480) {
+        return 5;
+      } else if (window.innerWidth > 480 && window.innerWidth < 1200) {
+        return 8;
+      }
+        return 12;
+      
+    }
+    const array = widthArrray()
+    console.log(array);
+    setMoviesCardsArray(searchMovie.slice(0, array));
+    setFilterMovies(searchMovie);
+    setChangeMoreButton(true);
   }
 
+  const [сhangeMoreButton, setChangeMoreButton] = useState(true);
+
+  function getMoreMovies() {
+    function widthArrray() {
+       if ( window.innerWidth < 1200) {
+        return 2;
+      }
+        return 3;
+      
+    }
+    const array = widthArrray()
+    setMoviesCardsArray(filterMovies.slice(0, moviesCardsArray.length + array));
+    checkMoreButtom(moviesCardsArray.length + array);
+    console.log(moviesCardsArray.length + array);
+    console.log(filterMovies.length);
+  }
+
+  function checkMoreButtom(moviesCardsArrayLength) {
+    if (filterMovies.length - 1 >= moviesCardsArrayLength)
+      setChangeMoreButton(true);
+    else setChangeMoreButton(false);
+  }
   function handleClickChange(card) {
     const isClick = savedMovie.some((i) => i.movieId === card.movieId);
     isClick ? handleCardDelete(card) : saveMovie(card);
-
-    // if (checkLike === true) {
-    //   setCheckLike(false);
-    //   handleCardDelete(card);
-    // } else {
-    //   setCheckLike(true);
-    //   saveMovie(card);
-    // }
   }
-  //   function handleCardLike(card) {
-  //     const isLiked = card.likes.some((i) => i === currentUser._id);
-  //    console.log(card.likes===currentUser._id);
-  //    api
-  //      .changeLikeCardStatus(card._id, !isLiked)
-  //      .then((newCard) => {
-  //        setCards((state) =>
-  //          state.map((c) => (c._id === card._id ? newCard : c))
-  //        );
-  //      })
-  //      .catch((err) => console.log(err));
-  //  }
   function userRegister(input) {
+    setPreloaderChange(true);
     apiAuth
       .register(input.name, input.email, input.password)
       .then((res) => {
+        setPreloaderChange(false);
         localStorage.setItem("JWT", res.token);
-        setLoggedIn(true);
-        history.push("/movies");
+        history.push("/signin");
         return;
       })
       .catch((err) => {
@@ -162,6 +157,7 @@ function App() {
   }
 
   function userAuthorize(input) {
+    setPreloaderChange(true);
     apiAuth
       .authorize(input.password, input.email)
       .then((data) => {
@@ -169,6 +165,7 @@ function App() {
         localStorage.setItem("JWT", data.token);
         setLoggedIn(true);
         history.push("/movies");
+        setPreloaderChange(false);
         console.log(data);
 
         return;
@@ -177,30 +174,45 @@ function App() {
         console.log(err);
       });
   }
+  function handleUpdateUser(dataUser) {
+    console.log(dataUser);
+    mainApi
+      .renameUser(dataUser.name, dataUser.email)
+      .then((dataUser) => {
+        setCurrentUser(dataUser);
+      })
+      .catch((err) => console.log(err));
+ 
+  }
   function userRemove() {
     localStorage.removeItem("JWT");
     history.push("/");
     setLoggedIn(false);
     setCurrentUser("");
+    setSavedMovie("");
+    setFilterMovies("");
   }
 
   function handleCardDelete(deletedCard) {
     const [delet] = savedMovie.filter((i) => i.movieId === deletedCard.movieId);
+    setPreloaderChange(true);
     mainApi
       .removeCard(delet._id)
       .then((newCard) => {
-        
         setSavedMovie(savedMovie.filter((i) => i._id !== newCard._id));
+        setPreloaderChange(false);
         console.log("removeCard");
       })
       .catch((err) => console.log(err));
   }
   function saveMovie(card) {
+    setPreloaderChange(true);
     console.log(card);
     mainApi
       .addMovie(card)
       .then((newcard) => {
         setSavedMovie([newcard, ...savedMovie]);
+        setPreloaderChange(false);
         console.log("saveCard");
       })
 
@@ -210,14 +222,14 @@ function App() {
   const soldCheckbox = ({ target: { checked } }) => {
     setChangeCheckbox(checked);
     if (checked) {
-      setOldData(filterMovies)
-      setFilterMovies(filterMovies.filter((i) => i.duration < 40));
+      setOldData(moviesCardsArray);
+      setMoviesCardsArray(moviesCardsArray.filter((i) => i.duration < 40));
     } else {
-      setFilterMovies(oldData);
+      setMoviesCardsArray(oldData);
     }
-  };
+  }; 
   console.log(changeCheckbox);
-
+  const [preloaderChange, setPreloaderChange] = useState(false);
   return (
     <currentUserContext.Provider value={currentUser}>
       <Switch>
@@ -233,13 +245,16 @@ function App() {
         <Route path="/movies">
           <Header loggedIn={loggedIn}></Header>
           <ProtectedRoute
+            сhangeMoreButton={сhangeMoreButton}
+            handleClickMore={getMoreMovies}
             loggedIn={loggedIn}
             path="/movies"
             onChange={soldCheckbox}
             component={Movies}
             onSubmit={imputSearch}
-            movies={filterMovies}
+            movies={moviesCardsArray}
             savedMovie={savedMovie}
+            preloaderChange={preloaderChange}
             clickChange={handleClickChange}
           ></ProtectedRoute>
           <Footer></Footer>
@@ -259,6 +274,7 @@ function App() {
         <Route path="/profile">
           <Header loggedIn={loggedIn}></Header>
           <ProtectedRoute
+          onUpdateUser={handleUpdateUser}
             loggedOut={userRemove}
             loggedIn={loggedIn}
             path="/profile"
@@ -276,6 +292,7 @@ function App() {
           <NotFoundPage> </NotFoundPage>
         </Route>
       </Switch>
+      <Preloader change={preloaderChange}></Preloader>
     </currentUserContext.Provider>
   );
 }
