@@ -26,6 +26,7 @@
 .more_active_none{
     display: none;
 }
+.movies__not-movies{text-align: center;} .movies__not-movies_active{display: none;}
 @media screen and (max-width: 984px) {
   .movies-card-list {
     border-top-width: 1px;

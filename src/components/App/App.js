@@ -1,5 +1,5 @@
 import { Route, Switch, useHistory } from "react-router-dom";
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Movies from "../Movies/Movies";
@@ -14,6 +14,7 @@ import mainApi from "../../utils/MainApi";
 import moviesApi from "../../utils/MoviesApi";
 import ProtectedRoute from "../ProtectedRoute";
 import Preloader from "../Preloader/Preloader";
+import InfoTooltip from "../InfiTooltip/InfoTooltip";
 import { currentUserContext } from "../contexts/CurrentUserContext";
 import "./App.css";
 
@@ -22,12 +23,14 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
   const [filterMovies, setFilterMovies] = useState([]);
-  const [oldData, setOldData] = useState("");
+  const [oldData, setOldData] = useState([]);
   const [moviesCardsArray, setMoviesCardsArray] = useState([]);
   const [savedMovie, setSavedMovie] = useState([]);
+  const [Movie, setMovie] = useState([]);
   const dataCard = JSON.parse(localStorage.getItem("dataCard"));
+
   // const dataFilter = JSON.parse(localStorage.getItem("datafilter"));
-  // const dataSaveMovie = JSON.parse(localStorage.getItem("dataSaveMovie"));
+  const dataSaveMovie = JSON.parse(localStorage.getItem("dataSaveMovie"));
 
   function checkToken() {
     const jwt = localStorage.getItem("JWT");
@@ -56,103 +59,202 @@ function App() {
           setCurrentUser(dataUser);
         })
         .catch((err) => console.log(err));
-      history.push("/");
     }
   }, [history, loggedIn]);
 
-  useEffect(() => {
+  function searchMeMovies(input) {
     if (loggedIn) {
       setPreloaderChange(true);
       mainApi
         .getMeMovies()
         .then((dataCard) => {
+          const currentDataCard = dataCard.filter(
+            (i) => i.owner === currentUser._id
+          );
+          setPreloaderChange(false);
+
           localStorage.setItem(
             "dataSaveMovie",
-            JSON.stringify(dataCard.filter((i) => i.owner === currentUser._id))
+            JSON.stringify(currentDataCard)
           );
-          setSavedMovie(dataCard.filter((i) => i.owner === currentUser._id));
-          setPreloaderChange(false);
+          // );
+          setSavedMovie(currentDataCard);
+
+          //  localStorage.setItem("dataCard", JSON.stringify(dataCard));
+          const movieFilter = currentDataCard.filter((item) => {
+            if (input === "") {
+              return "";
+            } else if (
+              item.nameRU.toLowerCase().includes(input.toLowerCase())
+            ) {
+              return item;
+            }
+            return;
+          });
+          function widthArrray() {
+            if (window.innerWidth <= 480) {
+              return 5;
+            } else if (window.innerWidth > 480 && window.innerWidth < 1200) {
+              return 8;
+            }
+            return 12;
+          }
+          const array = widthArrray();
+          localStorage.setItem(
+            "dataSaveMovie",
+            JSON.stringify(movieFilter.slice(0, array))
+          );
+          setMoviesCardsArray(movieFilter.slice(0, array));
+          setFilterMovies(movieFilter);
+          checkMoreButtom(movieFilter.length, array);
+          setChangeNotMovie(true);
+          console.log(movieFilter.length);
+
+          setTimeout(() => setChangeNotMovie(true), 3000);
         })
         .catch((err) => console.log(err));
     }
-  }, [currentUser._id, loggedIn]);
+  }
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   if (loggedIn) {
+  //     setPreloaderChange(true);
+  //     moviesApi
+  //       .getMovies()
+  //       .then((dataCard) => {
+  //         setPreloaderChange(false);
+  //        localStorage.setItem("dataCard", JSON.stringify(dataCard));
+  //       })
+
+  //       .catch((err) => console.log(err));
+  //   }
+  // }, [loggedIn]);
+
+  function searchMovies(input) {
     if (loggedIn) {
       setPreloaderChange(true);
       moviesApi
         .getMovies()
         .then((dataCard) => {
           setPreloaderChange(false);
-          localStorage.setItem("dataCard", JSON.stringify(dataCard));
+          // localStorage.setItem("dataCard", JSON.stringify(dataCard));
+          setMovie(dataCard);
+          const movieFilter = dataCard.filter((item) => {
+            if (input === "") {
+              return "";
+            } else if (
+              item.nameRU.toLowerCase().includes(input.toLowerCase())
+            ) {
+              return item;
+            }
+            return;
+          });
+          function widthArrray() {
+            if (window.innerWidth <= 480) {
+              return 5;
+            } else if (window.innerWidth > 480 && window.innerWidth < 1200) {
+              return 8;
+            }
+            return 12;
+          }
+          const array = widthArrray();
+          localStorage.setItem(
+            "dataCard",
+            JSON.stringify(movieFilter.slice(0, array))
+          );
+          setMoviesCardsArray(movieFilter.slice(0, array));
+          setFilterMovies(movieFilter);
+          checkMoreButtom(movieFilter.length, array);
+          setChangeNotMovie(true);
+          console.log(movieFilter);
+
+          setTimeout(() => setChangeNotMovie(true), 3000);
         })
 
         .catch((err) => console.log(err));
     }
-  }, [loggedIn]);
-
-  function imputSearch(input) {
-    const searchMovie = dataCard.filter((item) => {
-      if (input === "") {
-        return "";
-      } else if (item.nameRU.toLowerCase().includes(input.toLowerCase())) {
-        return item;
-      }  return "";
-    });
-    function widthArrray() {
-      if (window.innerWidth <= 480) {
-        return 5;
-      } else if (window.innerWidth > 480 && window.innerWidth < 1200) {
-        return 8;
-      }
-        return 12;
-      
-    }
-    const array = widthArrray()
-    console.log(array);
-    setMoviesCardsArray(searchMovie.slice(0, array));
-    setFilterMovies(searchMovie);
-    setChangeMoreButton(true);
   }
 
-  const [сhangeMoreButton, setChangeMoreButton] = useState(true);
+  const [сhangeMoreButton, setChangeMoreButton] = useState(false);
+  const [сhangeNotMovie, setChangeNotMovie] = useState(false);
 
-  function getMoreMovies() {
+  function getMoreMovies(dataCard) {
     function widthArrray() {
-       if ( window.innerWidth < 1200) {
+      if (window.innerWidth < 1200) {
         return 2;
       }
-        return 3;
-      
+      return 3;
     }
-    const array = widthArrray()
+    const array = widthArrray();
+    localStorage.setItem(
+      `${dataCard}`,
+      JSON.stringify(filterMovies.slice(0, moviesCardsArray.length + array))
+    );
     setMoviesCardsArray(filterMovies.slice(0, moviesCardsArray.length + array));
-    checkMoreButtom(moviesCardsArray.length + array);
-    console.log(moviesCardsArray.length + array);
-    console.log(filterMovies.length);
+    checkMoreButtom(
+      filterMovies.length + array,
+      moviesCardsArray.length + array
+    );
   }
 
-  function checkMoreButtom(moviesCardsArrayLength) {
-    if (filterMovies.length - 1 >= moviesCardsArrayLength)
-      setChangeMoreButton(true);
+  function checkMoreButtom(movie, ArrayLength) {
+    if (movie - 2 >= ArrayLength) setChangeMoreButton(true);
     else setChangeMoreButton(false);
   }
   function handleClickChange(card) {
     const isClick = savedMovie.some((i) => i.movieId === card.movieId);
     isClick ? handleCardDelete(card) : saveMovie(card);
   }
+
+  const soldCheckbox = ({ target: { checked } }) => {
+    if (checked) {
+      setOldData(filterMovies);
+      setMoviesCardsArray(filterMovies.filter((i) => i.duration < 40));
+
+      localStorage.setItem(
+        "dataCard",
+        JSON.stringify(dataCard.filter((i) => i.duration < 40))
+      );
+
+      setChangeNotMovie(true);
+      setTimeout(() => setChangeNotMovie(true), 3000);
+    } else {
+      setMoviesCardsArray(oldData);
+      localStorage.setItem("dataCard", JSON.stringify(oldData));
+    }
+  };
+  const soldCheckboxMe = ({ target: { checked } }) => {
+    if (checked) {
+      setOldData(filterMovies);
+      setMoviesCardsArray(filterMovies.filter((i) => i.duration < 40));
+
+      localStorage.setItem(
+        "dataSaveMovie",
+        JSON.stringify(dataSaveMovie.filter((i) => i.duration < 40))
+      );
+
+      setChangeNotMovie(true);
+      setTimeout(() => setChangeNotMovie(true), 3000);
+    } else {
+      setMoviesCardsArray(oldData);
+      localStorage.setItem("dataSaveMovie", JSON.stringify(oldData));
+    }
+  };
   function userRegister(input) {
     setPreloaderChange(true);
     apiAuth
       .register(input.name, input.email, input.password)
       .then((res) => {
         setPreloaderChange(false);
-        localStorage.setItem("JWT", res.token);
-        history.push("/signin");
-        return;
+        userAuthorize(input);
       })
       .catch((err) => {
         console.log(err);
+        setIsInfoTooltipStatus(false);
+        setIsInfoTooltipOpen(true);
+        setTimeout(() => {
+          setIsInfoTooltipOpen(false);
+        }, 1000);
       });
   }
 
@@ -161,28 +263,50 @@ function App() {
     apiAuth
       .authorize(input.password, input.email)
       .then((data) => {
+        setPreloaderChange(false);
+
         setCurrentUser({ ...currentUser, email: input.email });
         localStorage.setItem("JWT", data.token);
         setLoggedIn(true);
+        setIsInfoTooltipStatus(true);
+        setIsInfoTooltipOpen(true);
+        setTimeout(() => {
+          setIsInfoTooltipOpen(false);
+        }, 1000);
         history.push("/movies");
-        setPreloaderChange(false);
         console.log(data);
 
         return;
       })
       .catch((err) => {
         console.log(err);
+        setIsInfoTooltipStatus(false);
+        setIsInfoTooltipOpen(true);
+        setTimeout(() => {
+          setIsInfoTooltipOpen(false);
+        }, 1000);
       });
   }
   function handleUpdateUser(dataUser) {
     console.log(dataUser);
+    setPreloaderChange(true);
     mainApi
       .renameUser(dataUser.name, dataUser.email)
       .then((dataUser) => {
+        setPreloaderChange(false);
+        setIsInfoTooltipStatus(true);
+        setIsInfoTooltipOpen(true);
         setCurrentUser(dataUser);
+        setTimeout(() => {
+          setIsInfoTooltipOpen(false);
+        }, 1000);
       })
       .catch((err) => console.log(err));
- 
+    setIsInfoTooltipStatus(false);
+    setCurrentUser(dataUser);
+    setTimeout(() => {
+      setIsInfoTooltipOpen(false);
+    }, 1000);
   }
   function userRemove() {
     localStorage.removeItem("JWT");
@@ -196,9 +320,16 @@ function App() {
   function handleCardDelete(deletedCard) {
     const [delet] = savedMovie.filter((i) => i.movieId === deletedCard.movieId);
     setPreloaderChange(true);
+    console.log(savedMovie);
+    console.log(delet);
+
     mainApi
       .removeCard(delet._id)
       .then((newCard) => {
+        localStorage.setItem(
+          "dataSaveMovie",
+          JSON.stringify(dataSaveMovie.filter((i) => i._id !== newCard._id))
+        );
         setSavedMovie(savedMovie.filter((i) => i._id !== newCard._id));
         setPreloaderChange(false);
         console.log("removeCard");
@@ -218,17 +349,9 @@ function App() {
 
       .catch((err) => console.log(err));
   }
-  const [changeCheckbox, setChangeCheckbox] = useState(false);
-  const soldCheckbox = ({ target: { checked } }) => {
-    setChangeCheckbox(checked);
-    if (checked) {
-      setOldData(moviesCardsArray);
-      setMoviesCardsArray(moviesCardsArray.filter((i) => i.duration < 40));
-    } else {
-      setMoviesCardsArray(oldData);
-    }
-  }; 
-  console.log(changeCheckbox);
+
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
+  const [isInfoTooltipStatus, setIsInfoTooltipStatus] = React.useState(false);
   const [preloaderChange, setPreloaderChange] = useState(false);
   return (
     <currentUserContext.Provider value={currentUser}>
@@ -245,14 +368,15 @@ function App() {
         <Route path="/movies">
           <Header loggedIn={loggedIn}></Header>
           <ProtectedRoute
+            сhangeNotMovie={сhangeNotMovie}
             сhangeMoreButton={сhangeMoreButton}
             handleClickMore={getMoreMovies}
             loggedIn={loggedIn}
             path="/movies"
             onChange={soldCheckbox}
             component={Movies}
-            onSubmit={imputSearch}
-            movies={moviesCardsArray}
+            onSubmit={searchMovies}
+            movies={moviesCardsArray == 0 ? dataCard : moviesCardsArray}
             savedMovie={savedMovie}
             preloaderChange={preloaderChange}
             clickChange={handleClickChange}
@@ -262,8 +386,14 @@ function App() {
         <Route path="/saved-movies">
           <Header loggedIn={loggedIn}></Header>
           <ProtectedRoute
+            сhangeNotMovie={сhangeNotMovie}
+            сhangeMoreButton={сhangeMoreButton}
+            handleClickMore={getMoreMovies}
+            onChange={soldCheckboxMe}
+            onSubmit={searchMeMovies}
+            preloaderChange={preloaderChange}
             handleCardDelete={handleCardDelete}
-            movies={savedMovie}
+            movies={Movie == 0 ? dataSaveMovie : Movie}
             loggedIn={loggedIn}
             path="/saved-movies"
             component={SavedMovies}
@@ -274,7 +404,7 @@ function App() {
         <Route path="/profile">
           <Header loggedIn={loggedIn}></Header>
           <ProtectedRoute
-          onUpdateUser={handleUpdateUser}
+            onUpdateUser={handleUpdateUser}
             loggedOut={userRemove}
             loggedIn={loggedIn}
             path="/profile"
@@ -293,6 +423,7 @@ function App() {
         </Route>
       </Switch>
       <Preloader change={preloaderChange}></Preloader>
+      <InfoTooltip loggedIn={isInfoTooltipStatus} isOpen={isInfoTooltipOpen} />
     </currentUserContext.Provider>
   );
 }

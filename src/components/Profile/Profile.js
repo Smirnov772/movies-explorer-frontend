@@ -73,8 +73,16 @@ function Profile(props) {
           ></input>
         </div>
       <button
+      style={{ display: `${isInputOpen}` }}
         className="profile__button "
         type="submit"
+        onClick={handleChangeInput}
+      >
+        Сохранить
+      </button>
+      <button style={{ display: `${isSpanOpen}` }}
+        className="profile__button "
+        type="button"
         onClick={handleChangeInput}
       >
         Редактировать

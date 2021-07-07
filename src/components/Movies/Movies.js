@@ -7,7 +7,14 @@ function Movies(props) {
   function handleSubmit(input) {
     props.onSubmit(input);
   }
-
+ 
+    function handleClickMore() {
+      props.handleClickMore("dataCard");
+    }
+    // function onChange() {
+    //   props.onChange("dataCard");
+    // }
+  
   return (
     <section className="movies">
       <SearchForm
@@ -17,8 +24,8 @@ function Movies(props) {
 
       <MoviesCardList
         сhangeMoreButton={props.сhangeMoreButton}
-        handleClickMore={props.handleClickMore}
-        preloaderChange={props.preloaderChange}
+        handleClickMore={handleClickMore}
+        сhangeNotMovie={props.сhangeNotMovie}
         savedMovie={props.savedMovie}
         onCardDelete={props.handleCardDelete}
         movieCard={props.movies}
