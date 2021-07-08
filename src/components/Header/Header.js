@@ -5,11 +5,7 @@ import logo from "../../images/logo.svg";
 import { useLocation } from "react-router-dom";
 import BurgerMenu from "./BurgerMenu/BurgerMenu";
 function Header(props) {
-  //   function toggleBurgerMenu(e) {
-  //     console.log(e);
 
-  //  e.target.classList.toggle("burger__button_active");
-  // }
   const [toggleBurgerMenu, setToggleBurgerMenu] = useState(false);
   function BurgerMenuToggle() {
     toggleBurgerMenu === false

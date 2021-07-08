@@ -1,22 +1,29 @@
 import React from "react";
 import { currentUserContext } from "../contexts/CurrentUserContext";
+import { useFormWithValidation } from "../hooks/useForm";
 
 function Profile(props) {
   const currentUser = React.useContext(currentUserContext);
-
+  const { values, handleChange, resetForm, errors, isValid } =
+    useFormWithValidation();
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [changeInput, setChangeInput] = React.useState(false);
+
   React.useEffect(() => {
-    setName(currentUser.name);
-    setEmail(currentUser.email);
-  }, [currentUser]);
+    if (currentUser) {
+      setName(currentUser.name);
+      setEmail(currentUser.email);
+      resetForm(currentUser, {}, true);
+    }
+  }, [currentUser, resetForm]);
+
   function handleNameChange(e) {
-    setName(e.target.value);
+    setName(e.target.values);
   }
 
   function handleEmailChange(e) {
-    setEmail(e.target.value);
+    setEmail(e.target.values);
   }
 
   function handleSubmit(e) {
@@ -46,15 +53,17 @@ function Profile(props) {
             style={{ display: `${isInputOpen}` }}
             className="profile__input profile__text"
             required
-            value={name}
+            value={values.name}
             onChange={handleNameChange}
             minLength="2"
             maxLength="40"
             type="text"
             id="userName"
             name="name"
+            onChange={handleChange}
           ></input>
         </div>
+        <span class="profile__errorValid">{errors.name}</span>
 
         <div className="profile__input-container">
           <p className="profile__user-email profile__text">E-mail</p>
@@ -63,30 +72,33 @@ function Profile(props) {
             style={{ display: `${isInputOpen}` }}
             className="profile__input profile__text"
             required
-            value={email}
+            value={values.email}
             onChange={handleEmailChange}
             minLength="2"
             maxLength="50"
             type="email"
             id="email"
             name="email"
+            onChange={handleChange}
           ></input>
         </div>
-      <button
-      style={{ display: `${isInputOpen}` }}
-        className="profile__button "
-        type="submit"
-        onClick={handleChangeInput}
-      >
-        Сохранить
-      </button>
-      <button style={{ display: `${isSpanOpen}` }}
-        className="profile__button "
-        type="button"
-        onClick={handleChangeInput}
-      >
-        Редактировать
-      </button>
+        <span class="profile__errorValid">{errors.email}</span>
+        <button
+          style={isValid && changeInput ? { display: "block", color: "green" } : {}}
+          className="profile__button profile__button_submit"
+          type="submit"
+          onClick={handleChangeInput}
+        >
+          Сохранить
+        </button>
+        <button
+          style={{ display: `${isSpanOpen}` }}
+          className="profile__button "
+          type="button"
+          onClick={handleChangeInput}
+        >
+          Редактировать
+        </button>
       </form>
       <button
         onClick={props.loggedOut}

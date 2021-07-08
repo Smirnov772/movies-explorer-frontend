@@ -1,15 +1,8 @@
 
 function MoviesCard(props) {
-  // const currentUser = React.useContext(currentUserContext);
-  // const dataSaveMovie = JSON.parse(localStorage.getItem("dataSaveMovie"));
   const isSave = props.savedMovie.some(
     (i) => i.movieId === props.movieId
   );
-  // const [checkLike, setCheckLike] = useState(isOwn)
-
-  // console.log(currentUser);
-  // console.log(props.savedMovie);
-  // console.log(props.movieId);
 
   const cardLikeButtonClassName =
     isSave ? "" : "movies-card__check_disable";
@@ -27,14 +20,6 @@ function MoviesCard(props) {
     props.clickChange(props);
   }
 
-  // function handleClickChange() {
-  //   if (checkLike === true) {
-  //     setCheckLike(false)
-  //     props.onCardDelete(props);
-  //   } else {
-  //     setCheckLike(true)
-  //     props.clickLike(props);}
-  // }
   return (
     <div className="movies-card">
       {" "}

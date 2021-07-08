@@ -8,7 +8,7 @@ const onError = (res) => {
   class MainApi {
     constructor({ url, headers }) {
       this._url = url;
-      // this._cohortId = cohortId;
+    
       this._headers = headers;
     }
     getMeMovies() {
@@ -70,41 +70,6 @@ const onError = (res) => {
         'credentials': 'include',
       }).then(onError);
     }
-    // editAvatar(avatarId) {
-    //   console.log(avatarId)
-    //   return fetch(`${this._url}/users/me/avatar`, {
-    //     method: "PATCH",
-    //     headers: {...this._headers, "Authorization": `Bearer ${localStorage.getItem("JWT")}`},
-    //     'credentials': 'include',
-    //     body: JSON.stringify({
-    //       avatar: `${avatarId}`,
-    //     }),
-    //   }).then(onError);
-    // }
-    // setLike(id) {
-    //   console.log(id);
-    //   return fetch(`${this._url}/cards/${id}/likes`, {
-    //     method: "PUT",
-    //     headers: {...this._headers, "Authorization": `Bearer ${localStorage.getItem("JWT")}`},
-    //     'credentials': 'include',
-    //   }).then(onError);
-    // }
-    // removeLike(id) {
-    //   console.log(id);
-    //   return fetch(`${this._url}/cards/${id}/likes`, {
-    //     method: "DELETE",
-    //     headers: {...this._headers, "Authorization": `Bearer ${localStorage.getItem("JWT")}`},
-    //     'credentials': 'include',
-    //   }).then(onError);
-    // }
-    // changeLikeCardStatus(id, isLiked) {
-    //   console.log(id, isLiked);
-    //   return fetch(`${this._url}/cards/${id}/likes`, {
-    //     method: isLiked ? "PUT" : "DELETE",
-    //     headers: {...this._headers, "Authorization": `Bearer ${localStorage.getItem("JWT")}`},
-    //     'credentials': 'include',
-    //   }).then(onError);
-    // }
   }
   
   const mainApi = new MainApi({

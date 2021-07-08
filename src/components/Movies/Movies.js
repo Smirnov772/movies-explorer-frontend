@@ -11,10 +11,7 @@ function Movies(props) {
     function handleClickMore() {
       props.handleClickMore("dataCard");
     }
-    // function onChange() {
-    //   props.onChange("dataCard");
-    // }
-  
+
   return (
     <section className="movies">
       <SearchForm

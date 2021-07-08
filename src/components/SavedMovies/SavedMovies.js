@@ -10,9 +10,7 @@ import React from "react";
   function handleClickMore() {
     props.handleClickMore("dataSaveMovie");
   }
-  // function clickChange() {
-  //   props.clickChange("dataSaveMovie");
-  // }
+  
   return (
     <section className="movies">
     <SearchForm

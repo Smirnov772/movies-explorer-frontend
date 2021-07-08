@@ -29,7 +29,6 @@ function App() {
   const [Movie, setMovie] = useState([]);
   const dataCard = JSON.parse(localStorage.getItem("dataCard"));
 
-  // const dataFilter = JSON.parse(localStorage.getItem("datafilter"));
   const dataSaveMovie = JSON.parse(localStorage.getItem("dataSaveMovie"));
 
   function checkToken() {
@@ -77,10 +76,8 @@ function App() {
             "dataSaveMovie",
             JSON.stringify(currentDataCard)
           );
-          // );
           setSavedMovie(currentDataCard);
 
-          //  localStorage.setItem("dataCard", JSON.stringify(dataCard));
           const movieFilter = currentDataCard.filter((item) => {
             if (input === "") {
               return "";
@@ -116,20 +113,6 @@ function App() {
     }
   }
 
-  // useEffect(() => {
-  //   if (loggedIn) {
-  //     setPreloaderChange(true);
-  //     moviesApi
-  //       .getMovies()
-  //       .then((dataCard) => {
-  //         setPreloaderChange(false);
-  //        localStorage.setItem("dataCard", JSON.stringify(dataCard));
-  //       })
-
-  //       .catch((err) => console.log(err));
-  //   }
-  // }, [loggedIn]);
-
   function searchMovies(input) {
     if (loggedIn) {
       setPreloaderChange(true);
@@ -137,7 +120,6 @@ function App() {
         .getMovies()
         .then((dataCard) => {
           setPreloaderChange(false);
-          // localStorage.setItem("dataCard", JSON.stringify(dataCard));
           setMovie(dataCard);
           const movieFilter = dataCard.filter((item) => {
             if (input === "") {
@@ -363,8 +345,7 @@ function App() {
           <Login onSubmit={userAuthorize}> </Login>
         </Route>
 
-        {/* <Route></Route> */}
-
+    
         <Route path="/movies">
           <Header loggedIn={loggedIn}></Header>
           <ProtectedRoute

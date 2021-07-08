@@ -8,7 +8,7 @@ const onError = (res) => {
   class MoviesApi {
     constructor({ url, headers }) {
       this._url = url;
-      // this._cohortId = cohortId;
+
       this._headers = headers;
     }
     getMovies() {
