@@ -23,8 +23,11 @@
 
 .profile__input {
   display: none;
+  text-align: end;
+  border: none;
+  background-color: #f8f8f8;
 }
-
+.profile__button_submit{display: none;}
 .profile__button {
   border: none;
   background: none;
@@ -38,7 +41,7 @@
 }
 .profile__text {
   font-weight: 500;
-  font-size: 11px;
+  font-size: 14px;
   line-height: 13px;
 }
 .profile__input-container {
@@ -56,4 +59,9 @@
   border-bottom: none;
   margin-bottom: 0;
   padding-bottom: 0;
+}
+.profile__errorValid {
+  font-size: 11px;
+  line-height: 12px;
+  color: red;
 }

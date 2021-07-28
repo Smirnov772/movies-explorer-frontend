@@ -4,21 +4,20 @@ import Navigation from "../Navigation/Navigation";
 import logo from "../../images/logo.svg";
 import { useLocation } from "react-router-dom";
 import BurgerMenu from "./BurgerMenu/BurgerMenu";
-function Header() {
-  //   function toggleBurgerMenu(e) {
-  //     console.log(e);
+function Header(props) {
 
-  //  e.target.classList.toggle("burger__button_active");
-  // }
   const [toggleBurgerMenu, setToggleBurgerMenu] = useState(false);
-  function BurgerMenuClick() {
+  function BurgerMenuToggle() {
     toggleBurgerMenu === false
       ? setToggleBurgerMenu(true)
       : setToggleBurgerMenu(false);
   }
-  console.log(toggleBurgerMenu);
+  function BurgerMenuClose() {
+    setToggleBurgerMenu(false);
+  }
+
   let location = useLocation();
-  console.log(location.pathname);
+
   return (
     <header
       className={
@@ -29,12 +28,13 @@ function Header() {
         <img src={logo} alt="Логотип" />{" "}
       </Link>
       <BurgerMenu
-        onClick={BurgerMenuClick}
+        onClick={BurgerMenuToggle}
         toggle={toggleBurgerMenu}
       ></BurgerMenu>
       <Navigation
+        loggedIn={props.loggedIn}
         handlerBurgerMenu={toggleBurgerMenu}
-        clickLink = {BurgerMenuClick}
+        clickLink={BurgerMenuClose}
       ></Navigation>
     </header>
   );

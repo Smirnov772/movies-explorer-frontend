@@ -11,7 +11,7 @@ function SearchForm(props) {
     e.preventDefault();
     props.onSubmit(imputSearch);
   }
-
+  
   return (
     <section className="search-form">
       <form onSubmit={handleSubmit} className="search-form__items">
