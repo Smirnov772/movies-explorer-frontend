@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/git@github.com:smirnov772.github.io/movies-explorer-frontend/static/css/main.d4744bb0.chunk.css",
+    "main.js": "/git@github.com:smirnov772.github.io/movies-explorer-frontend/static/js/main.633b9787.chunk.js",
+    "main.js.map": "/git@github.com:smirnov772.github.io/movies-explorer-frontend/static/js/main.633b9787.chunk.js.map",
+    "runtime-main.js": "/git@github.com:smirnov772.github.io/movies-explorer-frontend/static/js/runtime-main.0529b89b.js",
+    "runtime-main.js.map": "/git@github.com:smirnov772.github.io/movies-explorer-frontend/static/js/runtime-main.0529b89b.js.map",
+    "static/js/2.0a59c900.chunk.js": "/git@github.com:smirnov772.github.io/movies-explorer-frontend/static/js/2.0a59c900.chunk.js",
+    "static/js/2.0a59c900.chunk.js.map": "/git@github.com:smirnov772.github.io/movies-explorer-frontend/static/js/2.0a59c900.chunk.js.map",
+    "index.html": "/git@github.com:smirnov772.github.io/movies-explorer-frontend/index.html",
+    "static/css/main.d4744bb0.chunk.css.map": "/git@github.com:smirnov772.github.io/movies-explorer-frontend/static/css/main.d4744bb0.chunk.css.map",
+    "static/js/2.0a59c900.chunk.js.LICENSE.txt": "/git@github.com:smirnov772.github.io/movies-explorer-frontend/static/js/2.0a59c900.chunk.js.LICENSE.txt",
+    "static/media/infoTooltip.css": "/git@github.com:smirnov772.github.io/movies-explorer-frontend/static/media/CloseIcon.b9c42c3d.svg",
+    "static/media/IMG-20210129-WA0004 .0c0fe01e.jpeg": "/git@github.com:smirnov772.github.io/movies-explorer-frontend/static/media/IMG-20210129-WA0004 .0c0fe01e.jpeg",
+    "static/media/index.css": "/git@github.com:smirnov772.github.io/movies-explorer-frontend/static/media/moviesCardDeleteIcon.ba864669.svg",
+    "static/media/authLogoError.d4ce2a26.svg": "/git@github.com:smirnov772.github.io/movies-explorer-frontend/static/media/authLogoError.d4ce2a26.svg",
+    "static/media/authLogoOk.a9eb6caf.svg": "/git@github.com:smirnov772.github.io/movies-explorer-frontend/static/media/authLogoOk.a9eb6caf.svg",
+    "static/media/font-main.093d837f.svg": "/git@github.com:smirnov772.github.io/movies-explorer-frontend/static/media/font-main.093d837f.svg",
+    "static/media/icon-search.99b6633d.svg": "/git@github.com:smirnov772.github.io/movies-explorer-frontend/static/media/icon-search.99b6633d.svg",
+    "static/media/landing-logo.b2a32c1a.svg": "/git@github.com:smirnov772.github.io/movies-explorer-frontend/static/media/landing-logo.b2a32c1a.svg",
+    "static/media/logo.4091d06f.svg": "/git@github.com:smirnov772.github.io/movies-explorer-frontend/static/media/logo.4091d06f.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.0529b89b.js",
+    "static/js/2.0a59c900.chunk.js",
+    "static/css/main.d4744bb0.chunk.css",
+    "static/js/main.633b9787.chunk.js"
+  ]
+}
