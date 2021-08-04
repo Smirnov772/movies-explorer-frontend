@@ -15,45 +15,45 @@ function Techs() {
       <ul className="techs__list">
         <li>
           {" "}
-          <Link to=" " className="  techs__link link">
+          <p to=" " className="  techs__link link">
             HTML
-          </Link>
+          </p>
         </li>
         <li>
           {" "}
-          <Link to=" " className=" link techs__link">
+          <p to=" " className=" link techs__link">
             CSS
-          </Link>
+          </p>
         </li>
         <li>
           {" "}
-          <Link to=" " className=" link techs__link">
+          <p to=" " className=" link techs__link">
             JS
-          </Link>
+          </p>
         </li>
         <li>
           {" "}
-          <Link to=" " className=" link techs__link">
+          <p to=" " className=" link techs__link">
             React
-          </Link>
+          </p>
         </li>
         <li>
           {" "}
-          <Link to=" " className=" link techs__link">
+          <p to=" " className=" link techs__link">
             Git
-          </Link>
+          </p>
         </li>
         <li>
           {" "}
-          <Link to=" " className=" link techs__link">
+          <p to=" " className=" link techs__link">
             Express.js
-          </Link>
+          </p>
         </li>
         <li>
           {" "}
-          <Link to=" " className=" link techs__link">
+          <p to=" " className=" link techs__link">
             mongoDB
-          </Link>
+          </p>
         </li>
       </ul>{" "}
     </section>

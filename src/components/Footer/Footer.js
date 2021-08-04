@@ -9,17 +9,17 @@ function Footer() {
         <ul className="footer__list">
           <li>
             {" "}
-            <a href="https://praktikum.yandex.ru/" className="footer__link  link">
+            <a href="https://praktikum.yandex.ru/"  target="_blank"className="footer__link  link">
               Яндекс.Практикум
             </a>{" "}
           </li>
           <li>
-            <a href=" " className="footer__link link">
+            <a href="https://github.com/Smirnov772" target="_blank" className="footer__link link">
               Github
             </a>{" "}
           </li>
           <li>
-            <a href=" " className="footer__link link">
+            <a href="https://vk.com/id4269316" target="_blank" className="footer__link link">
               Vkontakte
             </a>{" "}
           </li>
