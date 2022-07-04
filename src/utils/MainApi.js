@@ -73,7 +73,7 @@ const onError = (res) => {
   }
   
   const mainApi = new MainApi({
-    url: "https://api.smirnov-dev.ru",
+    url: "https://api/smirnov-dev.ru",
     headers: {
       "Content-Type": "application/json"
     },

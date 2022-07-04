@@ -51,7 +51,7 @@ class ApiAuth {
 }
 
 const apiAuth = new ApiAuth({
-  url: "https://api.smirnov-dev.ru",
+  url: "https://api/smirnov-dev.ru",
   headers: {
     "Content-Type": "application/json"
   },
